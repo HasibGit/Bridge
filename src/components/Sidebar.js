@@ -8,6 +8,7 @@ import {
   ChromeOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
+import SidebarChat from "./SidebarChat";
 
 function Sidebar() {
   return (
@@ -23,7 +24,9 @@ function Sidebar() {
       <div className="sidebar_search">
         <Input placeholder="Search" prefix={<SearchOutlined />} />
       </div>
-      <div className="sidebar_chats"></div>
+      <div className="sidebar_chats">
+        <SidebarChat />
+      </div>
     </div>
   );
 }
