@@ -22,3 +22,9 @@
 .sidebar_search {
   padding: 20px;
 }
+
+.sidebar_chats {
+  flex: 1;
+  background-color: #fff;
+  overflow-y: auto;
+}
