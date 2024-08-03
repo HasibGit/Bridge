@@ -11,13 +11,25 @@ import {
 import SidebarChat from "./SidebarChat";
 
 function Sidebar() {
+  const createChat = () => {
+    const roomName = prompt("Enter room name");
+
+    if (roomName) {
+      console.log("Room being created");
+    }
+  };
+
   return (
     <div className="sidebar">
       <div className="sidebar_header">
         <Avatar size={50} icon={<UserOutlined />} />
         <div className="sidebar_headerRight">
           <Tooltip title="Create room">
-            <Button shape="circle" icon={<PlusSquareOutlined />} />
+            <Button
+              shape="circle"
+              icon={<PlusSquareOutlined />}
+              onClick={createChat}
+            />
           </Tooltip>
 
           <Button shape="circle" icon={<MessageOutlined />} />
