@@ -1,6 +1,5 @@
 .app {
-  display: grid;
-  place-items: center;
   height: 100vh;
-  background-color: #021526;
+  background-color: #f7f9f2;
+  display: flex;
 }
