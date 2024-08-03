@@ -1,11 +1,11 @@
 import React from "react";
 import "./Sidebar.css";
-import { Avatar, Button, Input } from "antd";
+import { Avatar, Button, Input, Tooltip } from "antd";
 import {
   UserOutlined,
   MessageOutlined,
   MenuOutlined,
-  ChromeOutlined,
+  PlusSquareOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
 import SidebarChat from "./SidebarChat";
@@ -16,7 +16,10 @@ function Sidebar() {
       <div className="sidebar_header">
         <Avatar size={50} icon={<UserOutlined />} />
         <div className="sidebar_headerRight">
-          <Button shape="circle" icon={<ChromeOutlined />} />
+          <Tooltip title="Create room">
+            <Button shape="circle" icon={<PlusSquareOutlined />} />
+          </Tooltip>
+
           <Button shape="circle" icon={<MessageOutlined />} />
           <Button shape="circle" icon={<MenuOutlined />} />
         </div>
