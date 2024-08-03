@@ -1,11 +1,12 @@
 import React from "react";
 import "./Sidebar.css";
-import { Avatar, Button } from "antd";
+import { Avatar, Button, Input } from "antd";
 import {
   UserOutlined,
   MessageOutlined,
   MenuOutlined,
   ChromeOutlined,
+  SearchOutlined,
 } from "@ant-design/icons";
 
 function Sidebar() {
@@ -19,7 +20,9 @@ function Sidebar() {
           <Button shape="circle" icon={<MenuOutlined />} />
         </div>
       </div>
-      <div className="sidebar_search"></div>
+      <div className="sidebar_search">
+        <Input placeholder="Search" prefix={<SearchOutlined />} />
+      </div>
       <div className="sidebar_chats"></div>
     </div>
   );
