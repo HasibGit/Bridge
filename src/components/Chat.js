@@ -41,8 +41,12 @@ function Chat() {
             <span className="chat_timestamp">8/4/2024 3:18PM</span>
           </p>
         </div>
-        <div className="chat_message">
-          <p>Hey guys</p>
+        <div className="chat_message chat_receiver">
+          <p>
+            <span className="chat_name">Joe Gage</span>
+            Hey, welcome
+            <span className="chat_timestamp">8/4/2024 3:18PM</span>
+          </p>
         </div>
       </div>
       <div className="footer"></div>
