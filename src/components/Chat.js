@@ -7,11 +7,12 @@ import {
   PaperClipOutlined,
   SmileOutlined,
   SendOutlined,
+  DoubleRightOutlined,
 } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 import ChatMessage from "./ChatMessage";
 
-function Chat() {
+function Chat({ handleSidebarOpen, isSmallScreen }) {
   const [seed, setSeed] = useState("");
   const [message, setMessage] = useState("");
 
@@ -26,6 +27,15 @@ function Chat() {
   return (
     <div className="chat">
       <div className="chat_header">
+        {isSmallScreen && (
+          <Button
+            shape="circle"
+            icon={<DoubleRightOutlined />}
+            style={{ marginRight: "10px" }}
+            onClick={() => handleSidebarOpen(true)}
+          ></Button>
+        )}
+
         <Avatar
           src={"https://api.dicebear.com/9.x/pixel-art/svg?seed=" + seed}
         />

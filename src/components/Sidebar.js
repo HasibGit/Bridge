@@ -3,14 +3,12 @@ import "./Sidebar.css";
 import { Avatar, Button, Input, Tooltip, Modal } from "antd";
 import {
   UserOutlined,
-  MessageOutlined,
-  MenuOutlined,
   PlusSquareOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
 import SidebarChat from "./SidebarChat";
 
-function Sidebar() {
+function Sidebar({ isSmallScreen }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [roomName, setRoomName] = useState("");
 
@@ -44,7 +42,10 @@ function Sidebar() {
           style={{ margin: "16px 0" }}
         />
       </Modal>
-      <div className="sidebar">
+      <div
+        className="sidebar"
+        style={{ height: isSmallScreen ? "calc(100vh-57px)" : "100vh" }}
+      >
         <div className="sidebar_header">
           <Avatar size={50} icon={<UserOutlined />} />
           <div className="sidebar_headerRight">
@@ -55,9 +56,6 @@ function Sidebar() {
                 onClick={handleModalState}
               />
             </Tooltip>
-
-            <Button shape="circle" icon={<MessageOutlined />} />
-            <Button shape="circle" icon={<MenuOutlined />} />
           </div>
         </div>
         <div className="sidebar_search">

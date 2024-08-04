@@ -3,3 +3,7 @@
   background-color: #f7f9f2;
   display: flex;
 }
+
+.ant-drawer-body {
+  padding: 0 !important;
+}
