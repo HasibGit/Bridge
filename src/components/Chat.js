@@ -7,6 +7,7 @@ import {
   PaperClipOutlined,
 } from "@ant-design/icons";
 import { useState, useEffect } from "react";
+import ChatMessage from "./ChatMessage";
 
 function Chat() {
   const [seed, setSeed] = useState("");
@@ -34,20 +35,8 @@ function Chat() {
         </div>
       </div>
       <div className="chat_body">
-        <div className="chat_message">
-          <p>
-            <span className="chat_name">Hasib Ullah</span>
-            Hey guys
-            <span className="chat_timestamp">8/4/2024 3:18PM</span>
-          </p>
-        </div>
-        <div className="chat_message chat_receiver">
-          <p>
-            <span className="chat_name">Joe Gage</span>
-            Hey, welcome
-            <span className="chat_timestamp">8/4/2024 3:18PM</span>
-          </p>
-        </div>
+        <ChatMessage receiver={true} />
+        <ChatMessage />
       </div>
       <div className="footer"></div>
     </div>
