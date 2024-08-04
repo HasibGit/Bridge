@@ -15,13 +15,17 @@ function Sidebar({ isSmallScreen }) {
   const [roomName, setRoomName] = useState("");
 
   useEffect(() => {
-    db.collection("rooms").onSnapshot((snapshot) =>
+    const unsubscribe = db.collection("rooms").onSnapshot((snapshot) =>
       setRooms(
         snapshot.docs.map((doc) => {
           return { id: doc.id, data: doc.data() };
         })
       )
     );
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   const createChat = () => {
