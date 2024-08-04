@@ -42,3 +42,27 @@
   padding: 30px;
   overflow-y: auto;
 }
+
+.chat_message {
+  position: relative;
+  font-size: 16px;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 10px;
+  width: fit-content;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
+  transition: box-shadow 0.3s ease; /* Smooth transition for shadow */
+}
+
+.chat_name {
+  position: absolute;
+  top: -15px;
+  font-weight: 800;
+  font-size: xx-small;
+}
+
+.chat_timestamp {
+  margin-left: 10px;
+  font-size: xx-small;
+}

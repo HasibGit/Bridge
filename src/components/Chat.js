@@ -33,7 +33,18 @@ function Chat() {
           <Button icon={<MoreOutlined />} />
         </div>
       </div>
-      <div className="chat_body"></div>
+      <div className="chat_body">
+        <div className="chat_message">
+          <p>
+            <span className="chat_name">Hasib Ullah</span>
+            Hey guys
+            <span className="chat_timestamp">8/4/2024 3:18PM</span>
+          </p>
+        </div>
+        <div className="chat_message">
+          <p>Hey guys</p>
+        </div>
+      </div>
       <div className="footer"></div>
     </div>
   );
