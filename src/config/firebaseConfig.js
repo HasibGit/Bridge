@@ -1,8 +1,18 @@
+import firebase from "firebase/compat/app";
+
 const firebaseConfig = {
-  apiKey: "AIzaSyBdhDhx60y4aHAK803llCs9BXPcoGvRSzE",
-  authDomain: "bridge-e065d.firebaseapp.com",
-  projectId: "bridge-e065d",
-  storageBucket: "bridge-e065d.appspot.com",
-  messagingSenderId: "652618253505",
-  appId: "1:652618253505:web:b297f9bbb598bd23fc8040",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
+
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+const db = firebaseApp.firestore();
+const auth = firebase.auth();
+const provider = new firebase.auth.GoogleAuthProvider();
+
+export { auth, provider };
+export default db;

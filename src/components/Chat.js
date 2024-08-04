@@ -22,6 +22,7 @@ function Chat({ handleSidebarOpen, isSmallScreen }) {
 
   const sendMessage = () => {
     console.log(message);
+    setMessage("");
   };
 
   return (
