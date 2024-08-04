@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Sidebar.css";
 import { Avatar, Button, Input, Tooltip, Modal } from "antd";
 import {
@@ -6,11 +6,23 @@ import {
   PlusSquareOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
+import db from "../config/firebaseConfig";
 import SidebarChat from "./SidebarChat";
 
 function Sidebar({ isSmallScreen }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [rooms, setRooms] = useState([]);
   const [roomName, setRoomName] = useState("");
+
+  useEffect(() => {
+    db.collection("rooms").onSnapshot((snapshot) =>
+      setRooms(
+        snapshot.docs.map((doc) => {
+          return { id: doc.id, data: doc.data() };
+        })
+      )
+    );
+  }, []);
 
   const createChat = () => {
     if (roomName) {
@@ -62,35 +74,9 @@ function Sidebar({ isSmallScreen }) {
           <Input placeholder="Search" prefix={<SearchOutlined />} />
         </div>
         <div className="sidebar_chats">
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
-          <SidebarChat />
+          {rooms.map((room) => (
+            <SidebarChat key={room.id} id={room.id} name={room.data.name} />
+          ))}
         </div>
       </div>
     </>
