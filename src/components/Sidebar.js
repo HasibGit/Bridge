@@ -26,8 +26,9 @@ function Sidebar({ isSmallScreen }) {
 
   const createChat = () => {
     if (roomName) {
-      console.log("Room being created");
+      db.collection("rooms").add({ name: roomName });
     }
+    setRoomName("");
     setIsModalOpen(false);
   };
 
@@ -42,6 +43,7 @@ function Sidebar({ isSmallScreen }) {
         open={isModalOpen}
         onOk={createChat}
         onCancel={() => {
+          setRoomName("");
           setIsModalOpen(false);
         }}
         closable="true"
