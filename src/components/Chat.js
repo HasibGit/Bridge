@@ -28,9 +28,9 @@ function Chat() {
         </div>
 
         <div className="chat_headerRight">
-          <Button shape="circle" icon={<SearchOutlined />} />
-          <Button shape="circle" icon={<PaperClipOutlined />} />
-          <Button shape="circle" icon={<MoreOutlined />} />
+          <Button style={{ border: "none" }} icon={<SearchOutlined />} />
+          <Button style={{ border: "none" }} icon={<PaperClipOutlined />} />
+          <Button icon={<MoreOutlined />} />
         </div>
       </div>
       <div className="chat_body"></div>
