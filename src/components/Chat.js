@@ -1,10 +1,12 @@
 import React from "react";
 import "./Chat.css";
-import { Avatar, Button } from "antd";
+import { Avatar, Button, Input } from "antd";
 import {
   SearchOutlined,
   MoreOutlined,
   PaperClipOutlined,
+  SmileOutlined,
+  SendOutlined,
 } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 import ChatMessage from "./ChatMessage";
@@ -38,7 +40,22 @@ function Chat() {
         <ChatMessage receiver={true} />
         <ChatMessage />
       </div>
-      <div className="footer"></div>
+      <div className="chat_footer">
+        <Input
+          size="large"
+          placeholder="Enter message"
+          suffix={<SmileOutlined />}
+        />
+        <Button
+          style={{
+            border: "none",
+            backgroundColor: "#f8f4ec",
+            marginLeft: "10px",
+          }}
+          shape="circle"
+          icon={<SendOutlined />}
+        ></Button>
+      </div>
     </div>
   );
 }
