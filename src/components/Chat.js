@@ -13,10 +13,15 @@ import ChatMessage from "./ChatMessage";
 
 function Chat() {
   const [seed, setSeed] = useState("");
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 5000));
   }, []);
+
+  const sendMessage = () => {
+    console.log(message);
+  };
 
   return (
     <div className="chat">
@@ -45,6 +50,9 @@ function Chat() {
           size="large"
           placeholder="Enter message"
           suffix={<SmileOutlined />}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          onPressEnter={sendMessage}
         />
         <Button
           style={{
@@ -54,6 +62,7 @@ function Chat() {
           }}
           shape="circle"
           icon={<SendOutlined />}
+          onClick={sendMessage}
         ></Button>
       </div>
     </div>
