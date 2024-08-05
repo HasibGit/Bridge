@@ -4,9 +4,11 @@ import Sidebar from "./components/Sidebar";
 import { useState, useEffect } from "react";
 import { Drawer } from "antd";
 import { Route, Routes } from "react-router-dom";
+import Login from "./components/Login";
 
 function App() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(null);
+  const [user, setUser] = useState("");
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1000);
 
   useEffect(() => {
@@ -28,23 +30,32 @@ function App() {
 
   return (
     <div className="app">
-      {isSmallScreen && (
-        <Drawer placement="left" onClose={onClose} open={open}>
-          <Sidebar isSmallScreen={isSmallScreen} />
-        </Drawer>
+      {!user ? (
+        <Login />
+      ) : (
+        <>
+          {isSmallScreen ? (
+            <Drawer placement="left" onClose={onClose} open={open}>
+              <Sidebar isSmallScreen={isSmallScreen} />
+            </Drawer>
+          ) : (
+            <Sidebar isSmallScreen={isSmallScreen} />
+          )}
+
+          <Routes>
+            <Route
+              path="/rooms/:roomId"
+              element={
+                <Chat
+                  handleSidebarOpen={setOpen}
+                  isSmallScreen={isSmallScreen}
+                />
+              }
+            />
+            <Route path="/" element={<h1>Select room</h1>} />
+          </Routes>
+        </>
       )}
-
-      {!isSmallScreen && <Sidebar isSmallScreen={isSmallScreen} />}
-
-      <Routes>
-        <Route
-          path="/rooms/:roomId"
-          element={
-            <Chat handleSidebarOpen={setOpen} isSmallScreen={isSmallScreen} />
-          }
-        ></Route>
-        <Route path="/" element={<h1>Select room</h1>}></Route>
-      </Routes>
     </div>
   );
 }
