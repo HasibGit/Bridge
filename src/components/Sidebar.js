@@ -1,8 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./Sidebar.css";
 import { Avatar, Button, Input, Tooltip, Modal } from "antd";
-import { PlusSquareOutlined, SearchOutlined } from "@ant-design/icons";
-import db from "../config/firebaseConfig";
+import {
+  PlusSquareOutlined,
+  SearchOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
+import db, { auth } from "../config/firebaseConfig";
 import SidebarChat from "./SidebarChat";
 import UserContext from "../contexts/UserContext";
 
@@ -11,7 +15,7 @@ function Sidebar({ isSmallScreen }) {
   const [rooms, setRooms] = useState([]);
   const [roomName, setRoomName] = useState("");
 
-  const { user } = useContext(UserContext);
+  const { user, updateUser } = useContext(UserContext);
 
   useEffect(() => {
     const unsubscribe = db.collection("rooms").onSnapshot((snapshot) =>
@@ -26,6 +30,10 @@ function Sidebar({ isSmallScreen }) {
       unsubscribe();
     };
   }, []);
+
+  const logout = () => {
+    auth.signOut().then(() => updateUser(null));
+  };
 
   const createChat = () => {
     if (roomName) {
@@ -82,6 +90,13 @@ function Sidebar({ isSmallScreen }) {
                 shape="circle"
                 icon={<PlusSquareOutlined />}
                 onClick={handleModalState}
+              />
+            </Tooltip>
+            <Tooltip title="Logout">
+              <Button
+                shape="circle"
+                icon={<LogoutOutlined />}
+                onClick={logout}
               />
             </Tooltip>
           </div>
