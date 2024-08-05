@@ -1,9 +1,29 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Login.css";
 import { Card, Button } from "antd";
 import { GoogleOutlined } from "@ant-design/icons";
+import { auth, googleAuthProvider } from "../config/firebaseConfig";
+import UserContext from "../contexts/UserContext";
 
 function Login() {
+  const { updateUser } = useContext(UserContext);
+
+  const signIn = () => {
+    auth
+      .signInWithPopup(googleAuthProvider)
+      .then((res) =>
+        updateUser((currUser) => {
+          return {
+            ...currUser,
+            name: res.user.displayName,
+            email: res.user.email,
+            photoUrl: res.user.photoURL,
+          };
+        })
+      )
+      .catch((err) => alert(err.message));
+  };
+
   return (
     <div className="login_container">
       <Card className="login_card">
@@ -16,6 +36,7 @@ function Login() {
           type="primary"
           style={{ backgroundColor: "#5cb85c" }}
           icon={<GoogleOutlined />}
+          onClick={signIn}
         >
           Login with Google
         </Button>
