@@ -11,14 +11,26 @@ import {
 } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 import ChatMessage from "./ChatMessage";
+import { useParams } from "react-router-dom";
+import db from "../config/firebaseConfig";
 
 function Chat({ handleSidebarOpen, isSmallScreen }) {
   const [seed, setSeed] = useState("");
   const [message, setMessage] = useState("");
+  const [roomName, setRoomName] = useState("");
+  const { roomId } = useParams();
 
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 5000));
-  }, []);
+  }, [roomId]);
+
+  useEffect(() => {
+    if (roomId) {
+      db.collection("rooms")
+        .doc(roomId)
+        .onSnapshot((snapshot) => setRoomName(snapshot.data().name));
+    }
+  }, [roomId]);
 
   const sendMessage = () => {
     console.log(message);
@@ -42,7 +54,7 @@ function Chat({ handleSidebarOpen, isSmallScreen }) {
         />
 
         <div className="chat_headerInfo">
-          <h3>Room name</h3>
+          <h3>{roomName}</h3>
           <p>Last seen at ...</p>
         </div>
 
