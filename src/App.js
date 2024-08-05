@@ -3,6 +3,7 @@ import Chat from "./components/Chat";
 import Sidebar from "./components/Sidebar";
 import { useState, useEffect } from "react";
 import { Drawer } from "antd";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   const [open, setOpen] = useState(true);
@@ -35,7 +36,15 @@ function App() {
 
       {!isSmallScreen && <Sidebar isSmallScreen={isSmallScreen} />}
 
-      <Chat handleSidebarOpen={setOpen} isSmallScreen={isSmallScreen} />
+      <Routes>
+        <Route
+          path="/rooms/:roomId"
+          element={
+            <Chat handleSidebarOpen={setOpen} isSmallScreen={isSmallScreen} />
+          }
+        ></Route>
+        <Route path="/" element={<h1>Select room</h1>}></Route>
+      </Routes>
     </div>
   );
 }
