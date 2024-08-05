@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Sidebar.css";
 import { Avatar, Button, Input, Tooltip, Modal } from "antd";
-import {
-  UserOutlined,
-  PlusSquareOutlined,
-  SearchOutlined,
-} from "@ant-design/icons";
+import { PlusSquareOutlined, SearchOutlined } from "@ant-design/icons";
 import db from "../config/firebaseConfig";
 import SidebarChat from "./SidebarChat";
+import UserContext from "../contexts/UserContext";
 
 function Sidebar({ isSmallScreen }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [rooms, setRooms] = useState([]);
   const [roomName, setRoomName] = useState("");
+
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     const unsubscribe = db.collection("rooms").onSnapshot((snapshot) =>
@@ -65,7 +64,18 @@ function Sidebar({ isSmallScreen }) {
         style={{ height: isSmallScreen ? "calc(100vh-57px)" : "100vh" }}
       >
         <div className="sidebar_header">
-          <Avatar size={50} icon={<UserOutlined />} />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
+            <Avatar size={50} src={user?.photoUrl} />
+            <h3>{user?.name}</h3>
+          </div>
+
           <div className="sidebar_headerRight">
             <Tooltip title="Create room">
               <Button
