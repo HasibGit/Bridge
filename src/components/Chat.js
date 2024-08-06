@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Chat.css";
 import { Avatar, Button, Input } from "antd";
 import {
@@ -13,22 +13,56 @@ import { useState, useEffect } from "react";
 import ChatMessage from "./ChatMessage";
 import { useParams } from "react-router-dom";
 import db from "../config/firebaseConfig";
+import UserContext from "../contexts/UserContext";
+
+function formatTimestamp(isoString) {
+  const date = new Date(isoString);
+
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+  const year = date.getFullYear();
+
+  let hours = date.getHours();
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const ampm = hours >= 12 ? "PM" : "AM";
+
+  hours = hours % 12;
+  hours = hours ? hours : 12; // The hour '0' should be '12'
+  const strHours = String(hours).padStart(2, "0");
+
+  return `${day}/${month}/${year} ${strHours}:${minutes} ${ampm}`;
+}
 
 function Chat({ handleSidebarOpen, isSmallScreen }) {
   const [seed, setSeed] = useState("");
   const [message, setMessage] = useState("");
   const [roomName, setRoomName] = useState("");
+  const [messages, setMessages] = useState([]);
   const { roomId } = useParams();
 
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 5000));
   }, [roomId]);
 
+  const { user } = useContext(UserContext);
+
   useEffect(() => {
     if (roomId) {
       db.collection("rooms")
         .doc(roomId)
         .onSnapshot((snapshot) => setRoomName(snapshot.data().name));
+
+      db.collection("rooms")
+        .doc(roomId)
+        .collection("messages")
+        .orderBy("timestamp", "asc")
+        .onSnapshot((snapshot) =>
+          setMessages(
+            snapshot.docs.map((doc) => {
+              return { messageId: doc.id, ...doc.data() };
+            })
+          )
+        );
     }
   }, [roomId]);
 
@@ -65,8 +99,15 @@ function Chat({ handleSidebarOpen, isSmallScreen }) {
         </div>
       </div>
       <div className="chat_body">
-        <ChatMessage receiver={true} />
-        <ChatMessage />
+        {messages.map((data) => (
+          <ChatMessage
+            key={data.messageId}
+            message={data.message}
+            name={data.name}
+            timestamp={formatTimestamp(data.timestamp)}
+            receiver={user.email === data.email}
+          />
+        ))}
       </div>
       <div className="chat_footer">
         <Input
