@@ -67,15 +67,12 @@ function Chat({ handleSidebarOpen, isSmallScreen }) {
   }, [roomId]);
 
   const sendMessage = () => {
-    db.collection("rooms")
-      .doc(roomId)
-      .collection("messages")
-      .add({
-        name: user.name,
-        email: user.email,
-        message: message,
-        timestamp: new Date().toISOString(),
-      });
+    db.collection("rooms").doc(roomId).collection("messages").add({
+      name: user.name,
+      email: user.email,
+      message: message,
+      timestamp: new Date().toISOString(),
+    });
     setMessage("");
   };
 
@@ -97,7 +94,12 @@ function Chat({ handleSidebarOpen, isSmallScreen }) {
 
         <div className="chat_headerInfo">
           <h3>{roomName}</h3>
-          <p>Last seen at ...</p>
+          <p>
+            {"Last active.. " +
+              (messages.length > 0
+                ? formatTimestamp(messages[messages.length - 1]?.timestamp)
+                : "No messages")}
+          </p>
         </div>
 
         <div className="chat_headerRight">
