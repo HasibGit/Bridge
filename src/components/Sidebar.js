@@ -13,23 +13,44 @@ import UserContext from "../contexts/UserContext";
 function Sidebar({ isSmallScreen }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [rooms, setRooms] = useState([]);
+  const [filteredRooms, setFilteredRooms] = useState([]);
   const [roomName, setRoomName] = useState("");
 
   const { user, updateUser } = useContext(UserContext);
 
   useEffect(() => {
-    const unsubscribe = db.collection("rooms").onSnapshot((snapshot) =>
+    const unsubscribe = db.collection("rooms").onSnapshot((snapshot) => {
       setRooms(
         snapshot.docs.map((doc) => {
           return { id: doc.id, data: doc.data() };
         })
-      )
-    );
+      );
+      setFilteredRooms(
+        snapshot.docs.map((doc) => {
+          return { id: doc.id, data: doc.data() };
+        })
+      );
+    });
 
     return () => {
       unsubscribe();
     };
   }, []);
+
+  const filterRoom = (searchKey) => {
+    if (searchKey) {
+      const normalizedSearchKey = searchKey.toLowerCase().trim();
+
+      const filteredRooms = rooms.filter((room) => {
+        const roomName = room.data.name.toLowerCase().trim();
+        return roomName.includes(normalizedSearchKey);
+      });
+
+      setFilteredRooms(filteredRooms);
+    } else {
+      setFilteredRooms(rooms);
+    }
+  };
 
   const logout = () => {
     auth.signOut().then(() => updateUser(null));
@@ -102,10 +123,14 @@ function Sidebar({ isSmallScreen }) {
           </div>
         </div>
         <div className="sidebar_search">
-          <Input placeholder="Search" prefix={<SearchOutlined />} />
+          <Input
+            placeholder="Search room"
+            prefix={<SearchOutlined />}
+            onChange={(e) => filterRoom(e.target.value)}
+          />
         </div>
         <div className="sidebar_chats">
-          {rooms.map((room) => (
+          {filteredRooms.map((room) => (
             <SidebarChat key={room.id} id={room.id} name={room.data.name} />
           ))}
         </div>
