@@ -67,7 +67,15 @@ function Chat({ handleSidebarOpen, isSmallScreen }) {
   }, [roomId]);
 
   const sendMessage = () => {
-    console.log(message);
+    db.collection("rooms")
+      .doc(roomId)
+      .collection("messages")
+      .add({
+        name: user.name,
+        email: user.email,
+        message: message,
+        timestamp: new Date().toISOString(),
+      });
     setMessage("");
   };
 
