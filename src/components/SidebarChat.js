@@ -14,8 +14,10 @@ function SidebarChat({ id, name }) {
   }, []);
 
   useEffect(() => {
+    let unsubscribe;
     if (id) {
-      db.collection("rooms")
+      unsubscribe = db
+        .collection("rooms")
         .doc(id)
         .collection("messages")
         .orderBy("timestamp", "desc")
@@ -24,7 +26,9 @@ function SidebarChat({ id, name }) {
           setLastMessageSender(snapshot?.docs[0]?.data()?.name || "");
         });
     }
-  });
+
+    return () => unsubscribe();
+  }, [id]);
 
   return (
     <Link to={`/rooms/${id}`}>
