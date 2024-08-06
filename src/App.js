@@ -7,6 +7,7 @@ import { Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
 import UserContext from "./contexts/UserContext";
 import { auth } from "./config/firebaseConfig";
+import Home from "./components/Home";
 
 function App() {
   const [open, setOpen] = useState(null);
@@ -72,7 +73,15 @@ function App() {
                   />
                 }
               />
-              <Route path="/" element={<h1>Select room</h1>} />
+              <Route
+                path="/"
+                element={
+                  <Home
+                    handleSidebarOpen={setOpen}
+                    isSmallScreen={isSmallScreen}
+                  />
+                }
+              />
             </Routes>
           </>
         )}
